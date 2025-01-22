@@ -17,7 +17,6 @@
 //             ->select('colleges.*','contact_infos.*' ,'locations.*',) // Select all columns from both tables
 //             ->get();
 
-         
 
 //         // Return the result as a JSON response
 //         return response()->json($colleges);
@@ -56,7 +55,128 @@ class CollegeController extends Controller
         }
     }
 
-    // Display the courses provided by a specific college
+
+    // public function filterColleges(Request $request)
+    // {
+    //     // Validate the incoming request
+    //     $validated = $request->validate([
+    //         'level' => 'nullable|string|max:255',
+    //         'course' => 'nullable|string|max:255',
+    //         'city' => 'nullable|string|max:255',
+    //     ]);
+
+    //     try {
+    //         // Start the query for colleges
+    //         $query = College::query();
+
+    //         // Apply level filter if provided in the request body
+    //         if (!empty($validated['level'])) {
+    //             $query->where('level', 'like', '%' . $validated['level'] . '%');
+    //         }
+
+    //         // Apply course filter if provided in the request body
+    //         if (!empty($validated['course'])) {
+    //             $query->whereHas('courses', function ($q) use ($validated) {
+    //                 $q->where('full_name', 'like', '%' . $validated['course'] . '%');
+    //             });
+    //         }
+
+    //         // Apply city filter if provided in the request body
+    //         if (!empty($validated['city'])) {
+    //             $query->where('city', 'like', '%' . $validated['city'] . '%');
+    //         }
+
+    //         // Execute the query and fetch the results
+    //         $colleges = $query->get();
+
+    //         return response()->json([
+    //             'status' => 'success',
+    //             'data' => $colleges
+    //         ], 200);
+    //     } catch (Exception $e) {
+    //         return response()->json([
+    //             'status' => 'error',
+    //             'message' => 'Failed to fetch colleges',
+    //             'error' => $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
+    public function filterByCourseAndLocation(Request $request)
+    {
+        // Validate the incoming request
+        $validated = $request->validate([
+            'course' => 'required|string|max:255', // Course name is required
+            'city' => 'required|string|max:255',   // City name is required
+        ]);
+    
+        try {
+            // Fetch colleges offering the exact course in the specified city
+            $colleges = College::join('courses', 'colleges.college_id', '=', 'courses.college_id')
+                ->where('courses.full_name', $validated['course']) // Exact match for course
+                ->where('colleges.city', $validated['city'])       // Exact match for city
+                ->select('colleges.*', 'courses.full_name as course_name', 'courses.department', 'courses.duration')
+                ->get();
+    
+            return response()->json([
+                'status' => 'success',
+                'data' => $colleges
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to fetch colleges by course and location',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    
+    public function filterColleges(Request $request)
+    {
+        // Validate the incoming request
+        $validated = $request->validate([
+            'level' => 'nullable|string|max:255',
+            'course' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+        ]);
+    
+        try {
+            // Start the query for colleges with eager loading for courses
+            $query = College::with('courses');
+    
+            // Apply filters only if they are provided
+            if (isset($validated['level']) && $validated['level'] !== null) {
+                $query->where('level', 'like', '%' . $validated['level'] . '%');
+            }
+    
+            if (isset($validated['course']) && $validated['course'] !== null) {
+                $query->whereHas('courses', function ($q) use ($validated) {
+                    $q->where('full_name', 'like', '%' . $validated['course'] . '%');
+                });
+            }
+    
+            if (isset($validated['city']) && $validated['city'] !== null) {
+                $query->where('city', 'like', '%' . $validated['city'] . '%');
+            }
+    
+            // Fetch results that match all provided conditions
+            $colleges = $query->get();
+    
+            // Return response
+            return response()->json([
+                'status' => 'success',
+                'data' => $colleges
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to fetch colleges',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    
+
+    
     public function showCourses($college_id)
     {
         try {

@@ -131,49 +131,52 @@ class CollegeController extends Controller
     }
     
     public function filterColleges(Request $request)
-    {
-        // Validate the incoming request
-        $validated = $request->validate([
-            'level' => 'nullable|string|max:255',
-            'course' => 'nullable|string|max:255',
-            'city' => 'nullable|string|max:255',
-        ]);
-    
-        try {
-            // Start the query for colleges with eager loading for courses
-            $query = College::with('courses');
-    
-            // Apply filters only if they are provided
-            if (isset($validated['level']) && $validated['level'] !== null) {
-                $query->where('level', 'like', '%' . $validated['level'] . '%');
-            }
-    
-            if (isset($validated['course']) && $validated['course'] !== null) {
-                $query->whereHas('courses', function ($q) use ($validated) {
-                    $q->where('full_name', 'like', '%' . $validated['course'] . '%');
-                });
-            }
-    
-            if (isset($validated['city']) && $validated['city'] !== null) {
-                $query->where('city', 'like', '%' . $validated['city'] . '%');
-            }
-    
-            // Fetch results that match all provided conditions
-            $colleges = $query->get();
-    
-            // Return response
-            return response()->json([
-                'status' => 'success',
-                'data' => $colleges
-            ], 200);
-        } catch (Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Failed to fetch colleges',
-                'error' => $e->getMessage()
-            ], 500);
+{
+    // Validate the incoming request
+    $validated = $request->validate([
+        'level' => 'nullable|string|max:255',
+        'course' => 'nullable|string|max:255',
+        'city' => 'nullable|string|max:255',
+    ]);
+
+    try {
+        // Start the query for colleges with eager loading for courses
+        $query = College::with('courses');
+        // Apply filters only if they are provided
+        if (!empty($validated['level'])) {
+            $query->whereHas('courses', function ($q) use ($validated) {
+                $q->where('level', $validated['level']); 
+            });
         }
+
+        if (!empty($validated['course'])) {
+            $query->whereHas('courses', function ($q) use ($validated) {
+                $q->where('short_name',$validated['course']);
+            });
+        }
+
+        if (!empty($validated['city'])) {
+            $query->where('city', $validated['city']); // Exact match for city
+        }
+
+        // Fetch results that match all provided conditions
+        $colleges = $query->get();
+
+        // Return response
+        return response()->json([
+            'status' => 'success',
+            'data' => $colleges
+        ], 200);
+    } catch (Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Failed to fetch colleges',
+            'error' => $e->getMessage()
+        ], 500);
     }
+}
+
+
     
 
     

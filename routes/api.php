@@ -12,10 +12,9 @@ Route::get('/user', function (Request $request) {
 // Route::get('colleges', [CollegeController::class, 'index']);
 // //Route::post('colleges', [CollegeController::class, 'store']);
 // College Routes
-Route::get('/colleges/filter', [CollegeController::class, 'filterColleges']);
+Route::post('/colleges/filter/', [CollegeController::class, 'filterColleges']);
 Route::get('/colleges', [CollegeController::class, 'index']); // Get all colleges
 Route::get('/colleges/{college_id}/courses', [CollegeController::class, 'showCourses']);
-Route::get('/colleges/filter/exact-course-location', [CollegeController::class,'filterByCourseAndLocation']);
 
 
 // Get courses for a specific college

@@ -10,10 +10,10 @@ class College extends Model
     use HasFactory;
 
     // Table associated with the College model
-    // protected $table = 'colleges';
+    protected $table = 'Colleges';
 
     // The primary key for the table (optional if it's 'id' by default)
-    protected $primaryKey = 'college_id';
+    protected $primaryKey = 'id';
 
     // Fields that are mass assignable
     protected $fillable = [

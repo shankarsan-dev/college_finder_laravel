@@ -16,17 +16,17 @@ class College extends Model
     protected $primaryKey = 'id';
 
     // Fields that are mass assignable
-    protected $fillable = [
-        'name', 'city', 'email', 'phone', 'website', 'created_at', 'updated_at'
-    ];
+    // protected $fillable = [
+    //     'name', 'city', 'email', 'phone', 'website', 'created_at', 'updated_at'
+    // ];
 
     // Define the relationship between College and Courses (One-to-Many)
     public function courses()
     {
         return $this->hasMany(Course::class, 'college_id', 'college_id');
     }
-    public function universities()
-    {
-        return $this->hasMany(University::class, 'college_id', 'college_id');
-    }
+    // public function universities()
+    // {
+    //     return $this->hasMany(University::class, 'college_id', 'college_id');
+    // }
 }

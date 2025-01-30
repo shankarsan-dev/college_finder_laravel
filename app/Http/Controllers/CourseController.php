@@ -10,15 +10,27 @@ use Exception;
 class CourseController extends Controller
 {
     // Display a listing of all courses
+    // public function index()
+    // {
+    //     try {
+    //         $courses = Course::all()->groupBy('full_name,university',);
+    //         return response()->json($courses);
+    //     } catch (Exception $e) {
+    //         return response()->json(['error' => 'Failed to retrieve courses', 'message' => $e->getMessage()], 500);
+    //     }
+    // }
+
+
     public function index()
     {
         try {
-            $courses = Course::all()->groupBy('full_name,university',);
+            $courses = Course::all();
             return response()->json($courses);
         } catch (Exception $e) {
             return response()->json(['error' => 'Failed to retrieve courses', 'message' => $e->getMessage()], 500);
         }
     }
+
 
     // Display courses based on the level (e.g., 'Bachelor')
     public function getByLevel($level)

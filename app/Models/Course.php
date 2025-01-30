@@ -13,12 +13,12 @@ class Course extends Model
     protected $table = 'courses';
 
     // The primary key for the table (optional if it's 'id' by default)
-    protected $primaryKey = 'course_id';
+    protected $primaryKey = 'id';
 
     // Fields that are mass assignable
-    protected $fillable = [
-        'full_name', 'duration', 'level', 'department', 'short_name', 'eligibility', 'college_id', 'university', 'created_at', 'updated_at'
-    ];
+    // protected $fillable = [
+    //     'full_name', 'duration', 'level', 'department', 'short_name', 'eligibility', 'college_id', 'university', 'created_at', 'updated_at'
+    // ];
 
     // Define the relationship between Course and College (Many-to-One)
     public function college()

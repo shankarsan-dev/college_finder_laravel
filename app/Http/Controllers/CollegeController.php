@@ -171,7 +171,7 @@ class CollegeController extends Controller
         return response()->json([
             'status' => 'error',
             'message' => 'Failed to fetch colleges',
-            'error' => $e->getMessage()
+            // 'error' => $e->getMessage()
         ], 500);
     }
 }

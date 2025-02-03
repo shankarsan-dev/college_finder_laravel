@@ -36,63 +36,65 @@ class CollegeDetailController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+        public function index()
+        {
+            try {
+                // Using Eloquent (Preferred if you want to work with Models)
+                $results = CollegesDetail::join('Colleges as c', 'colleges_details.college_name', '=', 'c.college_name')
+                    ->select('c.address','c.university_name', 'colleges_details.*')
+                    ->get();
+                // Return the results if query is successful
+                return response()->json($results);
+            } catch (QueryException $e) {
+                // If there is a query exception, log and return an error response
+                // \Log::error('Database Query Error: ' . $e->getMessage());
+
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'There was an error fetching the college details: ' . $e->getMessage()
+                ], 500);
+            } catch (\Exception $e) {   
+                // For any other general exceptions
+                // \Log::error('General Error: ' . $e->getMessage());
+
+                return response()->json([
+                    'status' => 'error',
+                    // 'message' => 'An unexpected error occurred: ' . $e->getMessage()
+                ], 500);
+            }
+        }
+
+    
+    public function findCollegeById($college_id)
     {
         try {
-            // Using Eloquent (Preferred if you want to work with Models)
-            $results = CollegesDetail::join('Colleges as c', 'colleges_details.college_name', '=', 'c.college_name')
-                ->select('c.address','c.university_name', 'colleges_details.*')
-                ->get();
-            // Return the results if query is successful
-            return response()->json($results);
-        } catch (QueryException $e) {
-            // If there is a query exception, log and return an error response
-            // \Log::error('Database Query Error: ' . $e->getMessage());
+            // Validate if $college_id is a valid integer
+            if (!is_numeric($college_id) || (int)$college_id <= 0) {
+                return response()->json([
+                    'error' => 'Invalid college ID provided.'
+                ], 400);
+            }
 
-            return response()->json([
-                'status' => 'error',
-                'message' => 'There was an error fetching the college details: ' . $e->getMessage()
-            ], 500);
-        } catch (\Exception $e) {
-            // For any other general exceptions
-            // \Log::error('General Error: ' . $e->getMessage());
+            // Execute the custom SQL query
+            $collegeDetails = DB::select(
+                'SELECT c.address, c.university_name, cd.* 
+                FROM colleges_details cd 
+                JOIN Colleges c ON cd.college_name = c.college_name 
+                WHERE c.id = ?', [$college_id]
+            );
+            
+            $collegeDetails = !empty($collegeDetails) ? $collegeDetails[0] : null; // Take the first result (if exists)
+            
+            // Check if any data was found
+            if (empty($collegeDetails)) {
+                return response()->json([
+                    'error' => 'College not found.'
+                ], 404);
+            }
 
-            return response()->json([
-                'status' => 'error',
-                // 'message' => 'An unexpected error occurred: ' . $e->getMessage()
-            ], 500);
-        }
-    }
-
-   
-public function findCollegeById($college_id)
-{
-    try {
-        // Validate if $college_id is a valid integer
-        if (!is_numeric($college_id) || (int)$college_id <= 0) {
-            return response()->json([
-                'error' => 'Invalid college ID provided.'
-            ], 400);
-        }
-
-        // Execute the custom SQL query
-        $collegeDetails = DB::select(
-            'SELECT c.address, c.university_name, cd.* 
-             FROM colleges_details cd 
-             JOIN Colleges c ON cd.college_name = c.college_name 
-             WHERE c.id = ?', [$college_id]
-        );
-
-        // Check if any data was found
-        if (empty($collegeDetails)) {
-            return response()->json([
-                'error' => 'College not found.'
-            ], 404);
-        }
-
-        return response()->json([
-            'college_details' => $collegeDetails
-        ], 200);
+    //         return response()->json(
+    //  $collegeDetails);
+return response()->json($collegeDetails);
 
     } catch (QueryException $e) {
         // Log SQL-related errors and return a generic message
@@ -106,6 +108,103 @@ public function findCollegeById($college_id)
         \Log::error('General error: ' . $e->getMessage());
         return response()->json([
             'error' => 'An unexpected error occurred. Please try again later.'
+        ], 500);
+    }
+}
+
+
+
+
+// public function findByName(Request $request)
+// {
+//     try {
+//         // Get the search term from the request
+//         $searchTerm = $request->input('college_name');
+
+//         // Using Eloquent with LIKE for case-insensitive search
+//         $results = CollegesDetail::join('Colleges as c', 'colleges_details.college_name', '=', 'c.college_name')
+//             ->select('c.address', 'c.university_name', 'colleges_details.*')
+//             ->whereRaw('LOWER(colleges_details.college_name) LIKE LOWER(?)', ['%' . $searchTerm . '%'])
+//             ->get();
+
+//         return response()->json($results);
+//     } catch (QueryException $e) {
+//         return response()->json([
+//             'status' => 'error',
+//             'message' => 'There was an error fetching the college details: ' . $e->getMessage()
+//         ], 500);
+//     } catch (\Exception $e) {
+//         return response()->json([
+//             'status' => 'error',
+//             'message' => 'An unexpected error occurred.'
+//         ], 500);
+//     }
+// }
+
+// }
+
+public function findByName1($college_name)
+{
+    try {
+        // Validate if $college_name is a valid string
+        if (empty($college_name) || !is_string($college_name)) {
+            return response()->json([
+                'error' => 'Invalid college name provided.'
+            ], 400);
+        }
+
+        // Execute the SQL query with case-insensitive LIKE comparison
+        $collegeDetails = DB::select(
+            'SELECT c.address, c.university_name, cd.* 
+            FROM colleges_details cd 
+            JOIN Colleges c ON LOWER(cd.college_name) = LOWER(c.college_name) 
+            WHERE LOWER(c.college_name) LIKE LOWER(?)', ["%$college_name%"]
+        );
+
+        // Check if any data was found
+        if (empty($collegeDetails)) {
+            return response()->json([
+                'error' => 'College not found.'
+            ], 404);
+        }
+
+        return response()->json($collegeDetails, 200);
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'An error occurred while retrieving college details.',
+            'message' => $e->getMessage()
+        ], 500);
+    }
+}
+
+public function findByName($college_name)
+{
+    try {
+        // Validate if $college_name is a valid string
+        if (empty($college_name) || !is_string($college_name)) {
+            return response()->json([
+                'error' => 'Invalid college name provided.'
+            ], 400);
+        }
+
+        // Execute the SQL query with case-insensitive LIKE comparison
+        $collegeDetails = DB::select(
+            'SELECT college_name 
+            FROM colleges_details 
+            WHERE LOWER(college_name) LIKE LOWER(?)', ["%$college_name%"]
+        );
+        // Check if any data was found
+        if (empty($collegeDetails)) {
+            return response()->json([
+                'error' => 'College not found.'
+            ], 404);
+        }
+
+        return response()->json($collegeDetails, 200);
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'An error occurred while retrieving college details.',
+            'message' => $e->getMessage()
         ], 500);
     }
 }

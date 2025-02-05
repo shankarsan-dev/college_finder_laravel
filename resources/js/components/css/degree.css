@@ -1,0 +1,275 @@
+/* General Container */
+.container {
+    display: flex;
+    width: 100%; /* Full width of the screen */
+    height: 100%; /* Full height */
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Left side - Filter section for Degrees */
+  .filters {
+    flex: 0 0 250px; /* Fixed width for the filter section */
+    max-width: 250px;
+    padding: 20px;
+    border-right: 2px solid #ccc;
+    background-color: #f9f9f9;
+    overflow-y: auto;
+    max-height: 100vh;
+    position: sticky;
+    top: 0;
+    box-sizing: border-box;
+    transition: none; /* No transitions needed for desktop view */
+    transform: none; /* Ensure it's visible on desktop */
+  }
+  
+  .filters h3 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #333;
+  }
+  
+  .checkbox {
+    margin-bottom: 15px;
+  }
+  
+  .checkbox label {
+    font-size: 1.1em;
+    color: #555;
+  }
+  
+  .checkbox input {
+    margin-right: 10px;
+  }
+  
+  /* Hamburger Toggle Button */
+  .toggle-filters-button {
+    display: none; /* Hidden by default for larger screens */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    margin: 10px;
+  }
+  
+  .toggle-filters-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Close Filter Button */
+  .close-filters-button {
+    display: none; /* Initially hidden for larger screens */
+    background-color: transparent;
+    color: #333;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    text-align: right;
+    margin-bottom: 20px;
+  }
+  
+  .close-filters-button:hover {
+    color: #007bff;
+  }
+  
+  /* Hidden Filters - Mobile Only */
+  .filters.hidden {
+    transform: translateX(-100%); /* Slide off-screen */
+  }
+  
+  /* Degree List - Card Style */
+  .degree-list {
+    flex: 1;
+    padding: 20px;
+    background-color: #fafafa;
+    box-sizing: border-box;
+    max-height: 90vh; /* Set a max-height so content can scroll */
+  }
+  
+  .degree-list h3 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #333;
+  }
+  
+  .degree-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .degree-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    box-sizing: border-box;
+    height: auto; /* Let content decide height */
+  }
+  
+  .degree-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .degree-image {
+    width: 100%;
+    height: 150px; /* Adjust the image height */
+    object-fit: cover;
+  }
+  
+  .degree-details {
+    flex-grow: 1; /* Allow details to take up remaining space */
+    padding: 10px 0;
+    font-size: 0.85em; /* Make text smaller */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .degree-details h4 {
+    font-size: 1.2em; /* Increased font size for better readability */
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: bold;
+    line-height: 1.4;
+  }
+  
+  .degree-details p {
+    font-size: 0.95em; /* Slightly larger text */
+    color: #555;
+    margin: 5px 0;
+    line-height: 1.6; /* More line height for better readability */
+  }
+  
+  .degree-details p strong {
+    color: #333;
+  }
+  
+  /* Button Styling */
+  .toggle-details {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    width: 100%;
+  }
+  
+  .toggle-details:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Mobile responsive styles */
+  @media screen and (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+  
+    .filters {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      z-index: 1000;
+      background-color: #f9f9f9;
+      border-right: 2px solid #ccc;
+      max-width: 250px;
+      transform: translateX(-100%); /* Hidden by default */
+    }
+  
+    .filters.visible {
+      transform: translateX(0); /* Show when visible */
+    }
+  
+    .toggle-filters-button {
+      display: block; /* Show the button for smaller screens */
+    }
+  
+    .close-filters-button {
+      display: block; /* Visible in the filter section */
+    }
+  
+    .degree-list {
+      width: 100%;
+      padding-top: 60px; /* Space for the toggle button */
+    }
+  
+    .degree-container {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .degree-card {
+      height: auto;
+    }
+  
+    .degree-image {
+      height: 150px;
+    }
+  
+    .filters {
+      padding: 15px;
+    }
+  
+    .degree-details h4 {
+      font-size: 1em;
+    }
+  
+    .degree-details p {
+      font-size: 0.8em;
+    }
+  }
+  
+  /* Ensure the filters are always displayed on larger screens */
+  @media screen and (min-width: 769px) {
+    .filters {
+      display: block; /* Explicitly show filter on desktop */
+      position: sticky; /* Stick the filter while scrolling */
+      transform: none; /* Reset any mobile-specific transforms */
+    }
+  
+    .toggle-filters-button,
+    .close-filters-button {
+      display: none; /* Hide toggle buttons for larger screens */
+    }
+  }
+
+  /* Pagination Styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 10px 15px;
+  margin: 0 5px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  margin: 0 10px;
+}

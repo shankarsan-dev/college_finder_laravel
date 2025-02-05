@@ -1,0 +1,93 @@
+[
+    {
+      "name": "Course A",
+      "type": "online",
+      "category": ["IT", "Design"],
+      "location": "Online",
+      "educationLevel": ["bachelor"],
+      "mainStream": ["Engineering"],
+      "duration": "6 months"
+    },
+    {
+      "name": "Course gggB",
+      "type": "offline",
+      "category": ["Business", "Finance"],
+      "location": "California",
+      "educationLevel": ["+2"],
+      "mainStream": ["Law"],
+      "duration": "12 months"
+    },
+    {
+      "name": "Course C",
+      "type": "online",
+      "category": ["Engineering"],
+      "location": "New York",
+      "educationLevel": ["bachelor"],
+      "mainStream": ["Engineering"],
+      "duration": "9 months"
+    },
+    {
+      "name": "Course D",
+      "type": "offline",
+      "category": ["Law", "Science"],
+      "location": "Texas",
+      "educationLevel": ["bachelor"],
+      "mainStream": ["Medicine"],
+      "duration": "8 months"
+    },
+    {
+      "name": "Course E",
+      "type": "online",
+      "category": ["Design", "Architecture"],
+      "location": "Online",
+      "educationLevel": ["bachelor"],
+      "mainStream": ["Design"],
+      "duration": "6 months"
+    },
+    {
+      "name": "Course F",
+      "type": "offline",
+      "category": ["Medicine"],
+      "location": "Florida",
+      "educationLevel": ["+2"],
+      "mainStream": ["Medicine"],
+      "duration": "12 months"
+    },
+    {
+      "name": "Course G",
+      "type": "online",
+      "category": ["Business", "IT"],
+      "location": "Washington",
+      "educationLevel": ["bachelor"],
+      "mainStream": ["IT"],
+      "duration": "10 months"
+    },
+    {
+      "name": "Course H",
+      "type": "offline",
+      "category": ["Arts"],
+      "location": "Nevada",
+      "educationLevel": ["+2"],
+      "mainStream": ["Arts"],
+      "duration": "5 months"
+    },
+    {
+      "name": "Course I",
+      "type": "online",
+      "category": ["Engineering"],
+      "location": "Online",
+      "educationLevel": ["bachelor"],
+      "mainStream": ["Engineering"],
+      "duration": "6 months"
+    },
+    {
+      "name": "Course J",
+      "type": "offline",
+      "category": ["Law"],
+      "location": "Oregon",
+      "educationLevel": ["bachelor"],
+      "mainStream": ["Law"],
+      "duration": "9 months"
+    }
+  ]
+  

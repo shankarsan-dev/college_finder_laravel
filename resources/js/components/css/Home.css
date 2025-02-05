@@ -1,0 +1,365 @@
+  /* General Container to hold both filter and list sections */
+  .container {
+    display: flex;
+    width: 100%; /* Full width of the screen */
+    height: 100vh; /* Full viewport height */
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  /* Left side - Filter section */
+  .filters {
+    flex: 0 0 250px; /* Fixed width for the filter section */
+    max-width: 250px;
+    padding: 20px;
+    border-right: 2px solid #ccc;
+    background-color: #f9f9f9;
+    position: sticky;
+    top: 0;
+    box-sizing: border-box;
+    transition: opacity 0.5s ease; /* Fade transition */
+    opacity: 0; /* Initially hidden */
+    animation: slideInFromLeft 0.5s ease-out forwards; /* Slide-in from left on page load */
+  }
+
+  /* Filter items fade-in animation */
+  .filters .checkbox {
+    opacity: 0;
+    animation: fadeIn 0.5s forwards; /* Fade-in animation applied to filter checkboxes */
+  }
+
+  .filters .checkbox:nth-child(1) {
+    animation-delay: 0.2s; /* Delay each element's appearance */
+  }
+  .filters .checkbox:nth-child(2) {
+    animation-delay: 0.3s;
+  }
+  .filters .checkbox:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  /* Add fade-in animation */
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Slide-in from left animation */
+  @keyframes slideInFromLeft {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  .filters h3 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #333;
+  }
+
+  .checkbox {
+    margin-bottom: 15px;
+  }
+
+  .checkbox label {
+    font-size: 1.1em;
+    color: #555;
+  }
+
+  .checkbox input {
+    margin-right: 10px;
+  }
+
+  /* Hamburger Toggle Button */
+  .toggle-filters-button {
+    display: none; /* Hidden by default for larger screens */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    margin: 10px;
+  }
+
+  .toggle-filters-button:hover {
+    background-color: #0056b3;
+  }
+
+  /* Close Filter Button */
+  .close-filters-button {
+    display: none; /* Initially hidden for larger screens */
+    background-color: transparent;
+    color: #333;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    text-align: right;
+    margin-bottom: 20px;
+  }
+
+  .close-filters-button:hover {
+    color: #007bff;
+  }
+
+  /* Right side - College list */
+  .college-list {
+    flex: 1; /* Take up the remaining space */
+    padding: 20px;
+    background-color: #fafafa;
+    box-sizing: border-box;
+  }
+
+  .college-list h3 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #333;
+  }
+
+  .college-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .college-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added box-shadow transition */
+    height: 270px; /* Let content decide height */
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+
+  /* Hover effect on college card */
+  .college-card:hover {
+    transform: scale(1.05); /* Slightly increase the size of the card */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+  }
+
+  /* Image inside the college card */
+  .college-image {
+    width: 100%;
+    height: 120px; /* Adjusted image height */
+    object-fit: cover;
+  }
+
+  .college-details {
+    flex-grow: 1; /* Allow details to take up remaining space */
+    padding: 10px 0;
+    font-size: 0.8em; /* Make text smaller */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .college-details h4 {
+    font-size: 1em; /* Increased font size for better readability */
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: bold;
+    line-height: 1.4;
+    text-align:center
+  }
+
+  .college-details p {
+    font-size: 0.em; /* Slightly larger text */
+    color: #555;
+    margin: 5px 0;
+    line-height: 1.6; /* More line height for better readability */
+    align-items: center;
+  }
+
+  .college-details p strong {
+    color: #333;
+    font-size: 0.95em;
+  }
+
+  /* Button Styling */
+  .toggle-details {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    width: 100%;
+  }
+
+  .toggle-details:hover {
+    background-color: #0056b3;
+  }
+
+  /* Collapsible details */
+  .college-details {
+    display: block; /* Ensure it's shown by default */
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+
+  }
+
+  /* Mobile responsive styles */
+  @media screen and (max-width: 768px) {
+    .container {
+      flex-direction: column; /* Stack elements on mobile */
+    }
+
+    .filters {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      z-index: 1000;
+      background-color: #f9f9f9;
+      border-right: 2px solid #ccc;
+      max-width: 250px;
+      transform: translateX(-100%); /* Initially off-screen */
+      opacity: 0; /* Initially hidden */
+      transition: opacity 0.5s ease; /* Fade transition */
+    }
+
+    .filters.visible {
+      transform: translateX(0); /* Slide in */
+      opacity: 1; /* Fade in */
+    }
+
+    .toggle-filters-button {
+      display: block; /* Show the button for smaller screens */
+    }
+
+    .close-filters-button {
+      display: block; /* Visible in the filter section */
+    }
+
+    .college-list {
+      width: 100%;
+      padding-top: 60px; /* Space for the toggle button */
+    }
+
+    .college-container {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .college-card {
+      height: auto;
+    }
+
+    .college-image {
+      height: 150px;
+    }
+
+    .filters {
+      padding: 15px;
+    }
+
+    /* .college-details h4 {
+      font-size: 1em;
+    }
+    */
+
+    .college-details p {
+      font-size: 0.8em;
+    }
+  }
+
+  /* Ensure the filters are always displayed on larger screens */
+  @media screen and (min-width: 769px) {
+    .filters {
+      display: block; /* Explicitly show filter on desktop */
+      position: sticky; /* Stick the filter while scrolling */
+      transform: none; /* Reset any mobile-specific transforms */
+      opacity: 1; /* Ensure the filter is fully visible */
+    }
+
+    .toggle-filters-button,
+    .close-filters-button {
+      display: none; /* Hide toggle buttons for larger screens */
+    }
+  }
+
+  /* Pagination Styling */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .pagination button {
+    padding: 10px 15px;
+    margin: 0 5px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .pagination span {
+    margin: 0 10px;
+  }
+
+  /* Message when no colleges are found */
+  .college-list p {
+    text-align: center;
+    font-size: 1.2em;
+    color: #666;
+  }
+  .loading-spinner {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    padding: 20px;
+  }
+  /* Filters Wrapper */
+  .filters-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 0px;
+    box-shadow: none;
+    margin: 0px 0;
+  }
+
+  .toggle-filters-button,
+  .close-filters-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .toggle-filters-button:hover,
+  .close-filters-button:hover {
+    background-color: #0056b3;
+  }
+
+ 

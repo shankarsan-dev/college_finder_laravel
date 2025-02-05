@@ -1,0 +1,462 @@
+/* Main container */
+.college-detail-container {
+  padding: 20px;
+  width: 100%;
+  margin: 0;
+  background-color: #f1f1f1;
+  overflow-x: hidden;
+  min-height: 100vh;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Photo Section */
+.photo-header-container {
+  position: relative;
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.photo-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.college-photo {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  animation: slideIn 1.5s forwards;
+}
+
+/* Animation for slide-in effect */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* College Logo */
+.college-logo {
+  position: absolute;
+  bottom: -40px;
+  left: 30px;
+  width: 130px;
+  height: auto;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 12px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+  border: 3px solid #fff;
+  animation: zoomIn 1s forwards;
+}
+
+/* Mobile Logo Adjustments */
+@media screen and (max-width: 768px) {
+  .college-logo {
+    width: 100px;
+    padding: 8px;
+  }
+
+  /* Adjusting photo and logo position for smaller screens */
+  .college-header {
+    margin-top: 15px;
+    text-align: center;
+  }
+
+  .college-info-side h1 {
+    font-size: 1.8rem;  /* Smaller font size */
+    text-align: center;
+  }
+
+  .college-info-side p {
+    font-size: 1rem;  /* Smaller font size */
+    text-align: center;
+  }
+
+  .college-photo {
+    height: 200px;
+    object-fit: cover;
+  }
+}
+
+/* Animation for logo zoom-in */
+@keyframes zoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* College Name and Address */
+.college-header {
+  margin-top: 30px;
+  text-align: center; /* Center the header section */
+}
+
+.college-info-side {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 160px;
+  text-align: center; /* Default alignment */
+}
+
+.college-info-side h1 {
+  font-size: 3em;
+  color: #2c3e50;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center; /* Default alignment */
+}
+
+.college-info-side p {
+  font-size: 1.1em;
+  color: #7f8c8d;
+  line-height: 1.6;
+  text-align: center; /* Default alignment */
+}
+
+/* NEW: Container for College Name and Address */
+.college-name-address {
+  text-align: center;
+  margin-top: 30px;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 768px) {
+  .college-info-side {
+    margin-top: 2rem;
+    margin-left: 0; /* Remove the left margin */
+    text-align: center; /* Center align text on mobile */
+  }
+
+  .college-info-side h1 {
+    font-size: 1.8rem;  /* Smaller font size */
+    text-align: center;  /* Center the text */
+    margin: 0 0 10px;  /* Remove any large margin around the title */
+  }
+
+  .college-info-side p {
+    font-size: 1rem;  /* Smaller font size */
+    text-align: center; /* Center the address text as well */
+  }
+}
+
+/* Three-column Layout */
+.college-info {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  padding-bottom: 40px;
+}
+
+.left-column,
+.center-column,
+.right-column {
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: justify;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  animation: fadeInUp 1.2s forwards;
+  font-size: small;
+}
+
+/* Animation for fade-in effect */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.left-column {
+  flex: 0 0 25%;
+}
+
+.center-column,
+.right-column {
+  flex: 1;
+}
+
+.left-column h3,
+.center-column h3,
+.right-column h3 {
+  font-size: 1.6em;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.left-column p,
+.center-column p,
+.right-column p {
+  font-size: 1.1em;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Right Column Separate Sections */
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  background-color: #f1f1f1;
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+.top-section,
+.bottom-section {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.top-section h3,
+.bottom-section h3 {
+  font-size: 1.6em;
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.top-section p,
+.bottom-section p {
+  font-size: 1.1em;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Map Section */
+.college-map iframe {
+  width: 100%;
+  height: 300px;
+  border: none;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.college-map iframe:hover {
+  transform: scale(1.03);
+}
+
+/* About Us Section */
+.about-us-section {
+  margin-top: 40px;
+  padding: 25px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  opacity: 0;
+  animation: slideInAboutUs 1.5s forwards;
+}
+
+/* Animation for About Us sliding in */
+@keyframes slideInAboutUs {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.about-us-section h3 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: 600;
+}
+
+.about-us-section p {
+  font-size: 1.2rem;
+  color: #555;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 768px) {
+  .college-info {
+    flex-direction: column;
+  }
+
+  .left-column, .center-column, .right-column {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 15px;
+  }
+
+  .college-photo {
+    height: 250px;
+    object-fit: cover;
+  }
+
+  .college-logo {
+    bottom: -50px;
+    left: 15px;
+    width: 120px;
+  }
+
+  .college-info-side h1 {
+    font-size: 1.8rem; /* Smaller font size */
+  }
+
+  .college-info-side p {
+    font-size: 1rem; /* Smaller font size */
+  }
+
+  .college-header {
+    text-align: center;
+  }
+
+  .college-map img {
+    height: 200px;
+  }
+
+  .about-us-section {
+    padding: 20px;
+  }
+}
+
+/* Info Item Styling */
+.info-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 15px; /* Adjust font size */
+}
+
+.info-item .icon {
+  font-size: 30px; /* Make the icon bigger */
+  margin-right: 10px;
+}
+
+.right-column .top-section,
+.right-column .bottom-section {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Program List */
+.program-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Add space between the items */
+  padding-left: 0; /* Remove padding to get rid of bullet points */
+}
+
+.program-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #d6d3d3; /* Background color for each item */
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-size: 1.1em;
+  color: #555;
+}
+
+.program-item div {
+  flex: 1;
+  font-size: 1em;
+  color: #333;
+}
+
+/* Info Item Hover and Click Effects */
+.info-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 15px; /* Adjust font size */
+  transition: transform 0.3s ease; /* Add transition for hover and click effects */
+}
+
+.info-item .icon {
+  font-size: 30px; /* Make the icon bigger */
+  margin-right: 10px;
+  transition: transform 0.3s ease; /* Smooth transition for icon */
+}
+
+.info-item:hover {
+  transform: scale(1.05); /* Slight zoom-in effect on hover */
+  cursor: pointer;
+}
+
+.info-item:hover .icon {
+  transform: rotate(10deg) scale(1.2); /* Icon rotates slightly and grows */
+  color: #2c3e50; /* Change icon color on hover */
+  cursor: pointer;
+}
+
+.info-item:active {
+  transform: scale(0.95); /* Slight scale-down on click */
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.15); /* Reduced shadow on click */
+  background-color: rgba(0, 0, 0, 0.05); /* Light background color change on click */
+}
+.placeholder-banner {
+  width: 100%;
+  height: 200px;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: #888;
+}
+
+.college-logo-fallback {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  background-color: #e0e0e0;
+  border-radius: 50%;
+}
+
+.phone-numbers {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.phone-numbers p {
+  margin: 0;
+}
+
+.phone-numbers p:hover {
+  text-decoration: underline;
+}

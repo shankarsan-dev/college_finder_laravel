@@ -13,7 +13,7 @@ class Course extends Model
     protected $table = 'courses';
 
     // The primary key for the table (optional if it's 'id' by default)
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'course_id';
 
     // Fields that are mass assignable
     // protected $fillable = [

@@ -80,7 +80,7 @@ class CollegeDetailController extends Controller
                 'SELECT c.address, c.university_name, cd.* 
                 FROM colleges_details cd 
                 JOIN Colleges c ON cd.college_name = c.college_name 
-                WHERE c.id = ?', [$college_id]
+                WHERE cd.college_id = ?', [$college_id]
             );
             
             $collegeDetails = !empty($collegeDetails) ? $collegeDetails[0] : null; // Take the first result (if exists)
@@ -98,14 +98,14 @@ return response()->json($collegeDetails);
 
     } catch (QueryException $e) {
         // Log SQL-related errors and return a generic message
-        \Log::error('Database query error: ' . $e->getMessage());
+        // \Log::error('Database query error: ' . $e->getMessage());
         return response()->json([
             'error' => 'An error occurred while processing your request. Please try again later.'
         ], 500);
 
     } catch (\Exception $e) {
         // Log general errors and return a generic message
-        \Log::error('General error: ' . $e->getMessage());
+        // \Log::error('General error: ' . $e->getMessage());
         return response()->json([
             'error' => 'An unexpected error occurred. Please try again later.'
         ], 500);
@@ -143,24 +143,24 @@ return response()->json($collegeDetails);
 
 // }
 
-public function findByName1($college_name)
+public function findByCourse($course,$university)
 {
     try {
         // Validate if $college_name is a valid string
-        if (empty($college_name) || !is_string($college_name)) {
+        if (empty($course) || !is_string($course)) {
             return response()->json([
                 'error' => 'Invalid college name provided.'
             ], 400);
         }
 
-        // Execute the SQL query with case-insensitive LIKE comparison
         $collegeDetails = DB::select(
             'SELECT c.address, c.university_name, cd.* 
-            FROM colleges_details cd 
-            JOIN Colleges c ON LOWER(cd.college_name) = LOWER(c.college_name) 
-            WHERE LOWER(c.college_name) LIKE LOWER(?)', ["%$college_name%"]
+             FROM colleges_details cd 
+             JOIN Colleges c ON LOWER(cd.college_name) = LOWER(c.college_name) 
+             WHERE LOWER(cd.offered_program) LIKE LOWER(?) 
+               AND LOWER(c.university_name) LIKE LOWER(?)',
+            ["%$course%", "$university"]
         );
-
         // Check if any data was found
         if (empty($collegeDetails)) {
             return response()->json([
@@ -189,9 +189,9 @@ public function findByName($college_name)
 
         // Execute the SQL query with case-insensitive LIKE comparison
         $collegeDetails = DB::select(
-            'SELECT college_name 
+            'SELECT college_name,college_id 
             FROM colleges_details 
-            WHERE LOWER(college_name) LIKE LOWER(?)', ["%$college_name%"]
+            WHERE LOWER(college_name) LIKE LOWER(?)', ["$college_name%"]
         );
         // Check if any data was found
         if (empty($collegeDetails)) {
